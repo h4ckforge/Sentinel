@@ -84,7 +84,7 @@ def _compact_json(raw: str | None) -> str:
     if not raw:
         return "[]"
     try:
-        return json.dumps(json.loads(raw), separators=(",", ":"))
+        return json.dumps(json.loads(raw), separators=(",", ":"), ensure_ascii=False)
     except (json.JSONDecodeError, TypeError):
         return "[]"
 
