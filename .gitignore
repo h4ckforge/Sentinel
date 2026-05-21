@@ -1,0 +1,22 @@
+# Database
+sentinel.db
+
+# Claude Code internals
+.claude/
+.mcp.json
+CLAUDE.md
+
+# Internal working docs
+canal.md
+plan-capa4.md
+sentinel_qh4x-v2.html
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+Thumbs.db
