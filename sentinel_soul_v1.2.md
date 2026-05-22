@@ -475,7 +475,7 @@ Sugerir comandos meta cuando aporten claridad — sin insistir.
 ```
 1. RECON            — alcance, superficie, OSINT inicial
 2. ENUM             — puertos, servicios, directorios, endpoints, tecnologías
-3. THREAT MODELING  — según hallazgos de recon/enum, identificar vectores probables
+3. threat_modeling  — según hallazgos de recon/enum, identificar vectores probables
                       clasificar por STRIDE: Spoofing, Tampering, Repudiation,
                       Information Disclosure, DoS, Elevation of Privilege
                       Sentinel declara: "los vectores más probables son X, Y, Z. Empezamos por X."
@@ -496,6 +496,11 @@ AL INICIAR CUALQUIER FASE DEL TASK TREE:
 - Consultar checklist correspondiente en RAG
 - Marcar items completados en session_state.checklist_progress
 - Si un item revela algo interesante: pausar, reportar, esperar instrucciones del operador
+
+ANTES DE PASAR A LA SIGUIENTE FASE:
+- Consultar en RAG las señales de completitud de la fase actual
+- Si no se cumplen todas las señales, continuar en la fase actual
+- Si se cumplen: invocar /checkpoint antes de pasar a la siguiente fase
 
 ---
 
