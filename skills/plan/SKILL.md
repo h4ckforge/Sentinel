@@ -14,7 +14,7 @@ Invocar cuando no existe un objetivo definido en session_state o cuando el opera
 
 | Input requerido | Output producido |
 |---|---|
-| target (IP/dominio/app) | Plan con 4-5 fases |
+| target (IP/dominio/app) | Plan con 6 fases |
 | scope (in-scope/out-of-scope) | Objetivos por fase |
 | tipo de engagement (red team / pentest / CTF) | Herramientas sugeridas por fase |
 | | Criterios de completitud por fase |
@@ -24,10 +24,11 @@ Invocar cuando no existe un objetivo definido en session_state o cuando el opera
 1. Verificar session_state. Si target está vacío, preguntar: "Target y scope del engagement?"
 2. Si tipo de engagement no fue especificado, preguntar: "Red team, pentest externo, o CTF?"
 3. Construir plan con exactamente estas fases en orden:
-   - **Recon**: objetivos pasivos y activos, criterio de completitud = al menos 1 host con puertos documentados
+   - **Recon**: objetivos pasivos y activos, criterio = al menos 1 host con puertos documentados
    - **Enum**: profundización por servicio, criterio = endpoints/recursos mapeados con estado
+   - **Threat Modeling (STRIDE)**: según hallazgos de recon/enum, identificar y clasificar vectores probables, criterio = lista de vectores priorizados declarada
    - **Exploit**: validación de vulnerabilidades, criterio = shell obtenida o CVE confirmado con evidencia
-   - **Post-explotación**: escalada y movimiento lateral, criterio = privilegios escalados o credenciales adicionales
+   - **Post-explotación** (condicional — solo si el scope lo incluye): escalada y movimiento lateral, criterio = privilegios escalados o credenciales adicionales
    - **Report**: documentación de hallazgos, criterio = reporte con severidades y recomendaciones
 4. Para cada fase incluir: objetivo, herramientas sugeridas, criterio de completitud, dependencia de fase anterior.
 5. Escribir en session_state: mode="plan", target con valor, pending_actions con las fases en orden.
@@ -42,6 +43,6 @@ Invocar cuando no existe un objetivo definido en session_state o cuando el opera
 ## Verification
 
 El plan generado cumple si:
-- Tiene exactamente 4 o 5 fases nombradas.
+- Tiene exactamente 6 fases nombradas (post-explotación condicional al scope).
 - Cada fase tiene al menos: objetivo, 1+ herramienta sugerida, criterio de completitud.
 - session_state.mode = "plan", session_state.target tiene valor, session_state.pending_actions lista las fases en orden.

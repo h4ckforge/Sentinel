@@ -9,7 +9,7 @@ license: MIT
 ## When to Use
 
 Invocar en cualquiera de estos momentos:
-- Al completar una fase (recon, enum, exploit, post, report)
+- Al completar una fase (recon, enum, threat_modeling, exploit, post, report)
 - Antes de cerrar la sesión
 - Cuando el operador quiere guardar el estado manualmente
 - Ante cualquier cambio crítico de contexto (nuevo target, escalación de privilegios, cambio de vector)
