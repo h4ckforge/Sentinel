@@ -59,7 +59,7 @@ skills/                   ← Hermes native skills
       init_db.py          ← initialize sentinel.db
       checkpoint.py       ← parse agent output → write SQLite
       recover.py          ← reconstruct session state from DB
-operator-guide.md         ← wiki structure, Obsidian conventions
+wiki/                     ← Obsidian knowledge base (RAG source)
 ```
 
 The agent generates state in plain text. An external script writes to SQLite. The LLM never touches JSON directly. This is intentional.
