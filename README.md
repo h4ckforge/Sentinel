@@ -40,7 +40,8 @@ Sentinel doesn't improvise commands. Doesn't hallucinate flags. If it doesn't kn
 ## Architecture
 
 ```
-sentinel_soul_v1.3.md     ← system prompt (model-agnostic) — versión activa
+sentinel_soul.md          ← system prompt (model-agnostic) — versión activa
+versions/                 ← historial de versiones (v1.0 → v1.3)
 skills/                   ← Hermes native skills
   plan/SKILL.md
   recon/SKILL.md
@@ -97,15 +98,15 @@ python skills/checkpoint/scripts/init_db.py --db /path/to/sentinel.db
 
 ### 3. Load the system prompt
 
-Copy `sentinel_soul_v1.3.md` as the system prompt for your agent runtime.
+Copy `sentinel_soul.md` as the system prompt for your agent runtime.
 
 **Hermes Agent:**
 - Create a new agent in the Hermes dashboard
-- Paste the contents of `sentinel_soul_v1.3.md` as the system prompt
+- Paste the contents of `sentinel_soul.md` as the system prompt
 - Load skills from the `skills/` directory
 
 **Claude Code / other runtimes:**
-- Use `sentinel_soul_v1.3.md` as your system prompt
+- Use `sentinel_soul.md` as your system prompt
 - Reference skills manually or adapt to your runtime's skill format
 
 ### 4. Set database path (optional)
