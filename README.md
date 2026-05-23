@@ -40,7 +40,7 @@ Sentinel doesn't improvise commands. Doesn't hallucinate flags. If it doesn't kn
 ## Architecture
 
 ```
-sentinel_soul_v1.1.md     ← system prompt (model-agnostic)
+sentinel_soul_v1.3.md     ← system prompt (model-agnostic) — versión activa
 skills/                   ← Hermes native skills
   plan/SKILL.md
   recon/SKILL.md
@@ -78,7 +78,7 @@ The agent generates state in plain text. An external script writes to SQLite. Th
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/rockmetal/Sentinel.git
+git clone https://github.com/h4ckforge/Sentinel.git
 cd Sentinel
 ```
 
@@ -97,15 +97,15 @@ python skills/checkpoint/scripts/init_db.py --db /path/to/sentinel.db
 
 ### 3. Load the system prompt
 
-Copy `sentinel_soul_v1.1.md` as the system prompt for your agent runtime.
+Copy `sentinel_soul_v1.3.md` as the system prompt for your agent runtime.
 
 **Hermes Agent:**
 - Create a new agent in the Hermes dashboard
-- Paste the contents of `sentinel_soul_v1.1.md` as the system prompt
+- Paste the contents of `sentinel_soul_v1.3.md` as the system prompt
 - Load skills from the `skills/` directory
 
 **Claude Code / other runtimes:**
-- Use `sentinel_soul_v1.1.md` as your system prompt
+- Use `sentinel_soul_v1.3.md` as your system prompt
 - Reference skills manually or adapt to your runtime's skill format
 
 ### 4. Set database path (optional)
@@ -206,8 +206,11 @@ The system prompt, skills, and persistence layer are designed to work with any m
 
 | Component | Status |
 |---|---|
-| System prompt (6 layers) | Done — v1.1 |
+| System prompt (6 layers) | Done — v1.3 |
+| Heurísticas Operativas (13 rules) | Done — v1.3 |
+| Dynamic Checklist Switching | Done — v1.3 |
 | Skills (12 native) | Done |
+| Pipeline paralelo (recon + enum) | Done |
 | Session state persistence (SQLite) | Done |
 | RAG / Obsidian wiki | In progress |
 | Banco de pruebas (90 preguntas) | In progress |
