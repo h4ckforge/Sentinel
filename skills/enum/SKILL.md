@@ -25,10 +25,12 @@ Después de que session_state.recon_done = true. Si recon_done = false, mostrar 
 2. Bifurcar por protocolo detectado:
 
    **Rama Web (puertos 80, 443, 8080, 8443 u otros HTTP identificados):**
-   - `gobuster dir -u http://<target> -w /usr/share/wordlists/dirb/common.txt -o gobuster_<target>.txt`
-   - `ffuf -u http://<target>/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_<target>.json`
-   - `nikto -h http://<target> -o nikto_<target>.txt`
-   - Documentar: código de respuesta, tamaño, título de página para cada endpoint relevante.
+   - **Pipeline paralelo** — lanzar simultáneamente:
+     - **Terminal 1 (background):** `gobuster dir -u http://<target> -w /usr/share/wordlists/dirb/common.txt -o gobuster_<target>.txt`
+     - **Terminal 2 (inmediato):** `nikto -h http://<target> -o nikto_<target>.txt`
+     - **Terminal 2 (continuar):** `ffuf -u http://<target>/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_<target>.json`
+   - No esperar a gobuster para iniciar nikto/ffuf. Ningún turno de espera sin otra tarea activa.
+   - Documentar a medida que llegan resultados: código de respuesta, tamaño, título de página.
 
    **Rama SMB (puertos 445 o 139):**
    - `enum4linux -a <target> | tee enum4linux_<target>.txt`

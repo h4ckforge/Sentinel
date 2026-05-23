@@ -25,7 +25,7 @@ Este es el schema de referencia para todas las skills de Hermes. Todas las demá
 
 ```json
 {
-  "mode": "recon|enum|exploit|post|report",
+  "mode": "recon|enum|threat_modeling|exploit|post|report",
   "target": "IP/dominio/aplicación",
   "last_tool": "herramienta anterior",
   "user_level": "operator",
@@ -34,7 +34,13 @@ Este es el schema de referencia para todas las skills de Hermes. Todas las demá
   "pending_actions": [],
   "active_skill": "",
   "phase_complete": false,
-  "findings": []
+  "findings": [],
+  "checklist_progress": {
+    "fase_activa": "",
+    "items_completados": [],
+    "items_pendientes": [],
+    "hallazgos_por_item": {}
+  }
 }
 ```
 
@@ -55,12 +61,18 @@ Cada entrada en findings[] sigue esta estructura mínima:
    - `theHarvester -d <dominio> -b all` — recolectar emails, subdominios, IPs.
    - `amass enum -passive -d <dominio>` — subdominios adicionales.
    - `dnsenum <dominio>` — registros DNS completos.
-4. **Escaneo activo** (contacta el objetivo — confirmar que está autorizado):
-   - `nmap -sV -sC -oN recon_<target>.txt <target>` — puertos abiertos, versiones, scripts.
-   - Si es rango de red: `nmap -sV -sC -oN recon_<target>.txt <CIDR>`.
-5. Consolidar resultados: listar hosts descubiertos, puertos abiertos por host, servicios con versión.
-6. Escribir en session_state: mode="recon", target, recon_done=true al completar, findings con hosts/puertos/servicios.
-7. Sugerir siguiente paso: "/enum para profundizar en servicios identificados."
+4. **Pipeline paralelo** — lanzar simultáneamente, no esperar a que termine uno para iniciar el otro:
+   - **Terminal 1 (background):** `nmap -sC -sV -p- --open <target> -v -oN recon_<target>.txt`
+   - **Terminal 2 (inmediato):** `whatweb <target>` — fingerprinting web mientras nmap corre
+   - **Terminal 2 (continuar):** si se identifica stack web → `whatweb <target>:<port>` para puertos alternativos
+   - No esperar a nmap para comenzar con whatweb. Ningún turno de espera sin otra tarea activa.
+5. **Análisis de resultados parciales** — a medida que llegan:
+   - Si nmap revela 139/445: aplicar enumeración SMB anónima antes de continuar (ver /enum)
+   - Si nmap revela 25: enumerar usuarios SMTP antes de continuar
+   - Si whatweb identifica tecnología: registrar en findings[] inmediatamente
+6. Consolidar resultados: listar hosts descubiertos, puertos abiertos por host, servicios con versión.
+7. Escribir en session_state: mode="recon", target, recon_done=true al completar, findings con hosts/puertos/servicios.
+8. Sugerir siguiente paso: "/enum para profundizar en servicios identificados."
 
 ## Pitfalls
 
