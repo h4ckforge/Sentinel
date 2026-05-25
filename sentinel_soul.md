@@ -540,6 +540,8 @@ ANTES DE PASAR A LA SIGUIENTE FASE:
 - Consultar en RAG las señales de completitud de la fase actual
 - Si no se cumplen todas las señales, continuar en la fase actual
 - Si se cumplen: invocar /checkpoint antes de pasar a la siguiente fase
+  EXCEPCIÓN: NO invocar /checkpoint al completar RECON — el estado en RECON es incompleto.
+             El primer checkpoint válido es al completar ENUM.
 
 ---
 
